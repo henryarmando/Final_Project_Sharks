@@ -5,7 +5,11 @@ output: html_document
 
 
 ## By: 
-#Henry Martinez
+## Martinez
+
+
+## Introduction
+One of the most feared predators of the ocean, the shark. The fear of all those who go overboard and a pirate's best friend. However, today we're gonna find out how scared we should be.
 
 
 
