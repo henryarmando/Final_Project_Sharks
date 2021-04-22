@@ -9,33 +9,46 @@ output: html_document
 
 
 ## Introduction
-One of the most feared predators of the ocean, the shark. The fear of all those who go overboard and a pirate's best friend. However, today we're gonna find out how scared we should be.
+One of the most feared predators of the ocean, the shark. Today we're gonna find out how scared we should be of what has infamously been portrayed as a man-eating beast. Let's ask these questions:
++ Frequency of shark attacks each year
+
 
 
 
 
 ## Requirements
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(scales)
+library(readxl)
 ```
 
 
+## Dataset
+
+You can find the dataset I used from [This](https://www.kaggle.com/ncsaayali/shark-attack-dataset/metadata) site
 
 
 
+```{r message=FALSE, warning=FALSE}
+
+library(readxl)
+GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls", 
+    col_types = c("text", "text", "numeric", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "numeric", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "numeric"))
 
 
+```
 
 
 ```{r}
-library(readxl)
-GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls")
-
+head(GSAF5_1)
 ```
-
-
 
