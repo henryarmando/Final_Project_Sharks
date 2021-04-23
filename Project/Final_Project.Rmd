@@ -4,14 +4,20 @@ output: html_document
 ---
 
 
-## By: 
-## Martinez
+## By: Henry Martinez
 
 
 ## Introduction
 One of the most feared predators of the ocean, the shark. Today we're gonna find out how scared we should be of what has infamously been portrayed as a man-eating beast. Let's ask these questions:
-+ Frequency of shark attacks each year
 
+*Which State in the USA has the most reported shark attacks?*
+
+*What type of shark attack occurs the most among women & among men ?*
+
+*What age group makes up the most shark attacks?* 
+
+
+My project looks at over 6,000 reported cases of shark attacks including that area the attack took place, country, age and name of victim, and so on. 
 
 
 
@@ -24,16 +30,18 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 library(readxl)
+#libraries needed for this project
 ```
 
 
 ## Dataset
 
-You can find the dataset I used from [This](https://www.kaggle.com/ncsaayali/shark-attack-dataset/metadata) site
 
 
+Some variable values were changed to makes working with the dataset much easier and more acceisble. 
 
 ```{r message=FALSE, warning=FALSE}
+#Some variables had to be modified to numeric to make it possible to work with the dataset 
 
 library(readxl)
 GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls", 
@@ -51,4 +59,259 @@ GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls",
 ```{r}
 head(GSAF5_1)
 ```
+## Understading Missing Values
+In this dataset there are several missing values. To better understand this data and get a better view of what we are missing lets see how many observations are missing their age value.
+```{r}
+GSAF5_1 %>% 
+    filter(is.na(Age))
+```
+```{r}
+GSAF5_1 %>% 
+    filter(!is.na(Age))
+
+```
+
+Seeing as how more than 3/4 of the data is missing we will later create a mew Dataset filtering out these unwanted vlaues.
+
+### Data Exploration
+Let's take a peek into the dataset we will be exploring for today
+```{r warning=FALSE}
+summary(GSAF5_1)
+```
+Since this dataset is from an excel that has many blank rows, I will make a separate dataframe that excludes all those blank rows.
+```{r warning=FALSE}
+UseThis <- GSAF5_1 %>% 
+    filter(Year > 0) 
+    
+    
+```
+
+```{r warning=FALSE}
+UseThis %>% 
+    select(Country, Area, Year, Type) %>% 
+    unique()
+    
+```
+
+
+
+## Univariate Exploration
+We'll start analyzing our data though univariation based on specific fields. We will also be testing the integrity of the data to make sure it is viable for real world representations.
+
+## Frequency On Sex
+The Visualization below is the Distribution of shark attacks based off of sex. The graph also shows the amount of observation without a value for sex. However, we can extrapolate and say that the current trend of Males being targeted by sharks more than females can be applied to a larger sample size. Furthermore, We can see that unprovoked occurences of shark attacks are most common among both males and females.
+
+
+
+
+```{r warning=FALSE}
+
+UseThis %>% 
+
+    ggplot(aes( x = Sex,fill = Type)) +
+    geom_bar(
+        bins = 50,
+        na.rm = TRUE,
+       
+    )+
+   scale_y_continuous(
+        
+
+    )+
+    labs(title = "Distribution of shark Attacks based on sex",
+         x = "Sex",
+         y = "Count")
+
+```
+
+## Years
+From the Visualization below we can tell that 2015 had the highest number of shark attacks reported and no pattern can be differed from the first graph. The second graph below shows the full distribution of shark attacks. Here we can see a sharp increase in shark attacks as it approaches the 21st century. The graph also peaks somewhere in the 1960s, also known as the cultural decade. People were finally losing their war fatigue and likely going out to celebrate, which would make sense considering more people would be at the shoreline.  
+
+
+
+```{r warning=FALSE}
+UseThis %>% 
+group_by(Year) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:20) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x= reorder(Year, count),
+      fill = Year,
+      y = count)) +
+  labs(
+    title = "Distribution of Attacks Yearly",
+    x = "Year", 
+    y = "Count") +
+  theme(legend.position = "none") +
+  coord_flip()
+```
+
+```{r warning=FALSE}
+UseThis %>% 
+
+    ggplot() +
+    geom_bar(
+        aes( x = Year, fill = Type),
+        bins = 50,
+        na.rm = TRUE
+       
+        
+    )+
+   scale_x_continuous(
+        limits = c(1500, 2020)
+
+    )+
+    labs(title = "Distribution of shark Attacks based on Year",
+         x = "Year",
+         y = "Count")
+```
+
+
+
+
+
+
+
+## Country
+To better understand the distribution of attacks in the country of the USA, I made a visualization that displays each areas in the US a shark attack was reported and the quantity of each area. Below that is a visualization of the age group in the US that made up the majority of these shark attacks.
+
+
+```{r warning=FALSE}
+UseThis %>% 
+    filter(Country == "USA") %>% 
+   
+    ggplot()+
+    geom_bar(
+        aes(y = Area, fill = Type)
+    )+
+    labs(title = "Distribution of shark Attacks based on State",
+         x = "Count",
+         y = "Areas")
+```
+
+
+
+
+```{r warning=FALSE}
+UseThis %>% 
+    filter(Country == "USA") %>% 
+
+    ggplot()+
+    geom_bar(
+        aes(y = Age, fill = Type)
+    )+
+    labs(title = "Distribution of shark Attacks based on Age in the USA",
+         x = "count",
+         y = "Age")
+```
+
+
+
+
+
+
+## Multivariate Exploration
+The First Multi-Chart graph seen is showing the distribution of shark attacks by age. The Y-value determines if the attack was on a Male or Female and each chart itself represents a certain type of attack which are listed on the side. With this graph we can compare each type of attack with each other and discover that unprovoked has a wider range of age while still being centered on around 23 years old. The second graph is a density chart showing the relationship between age and year. This shows which year has what concentration of age as well as what type of attack it was.
+
+
+
+```{r warning=FALSE}
+UseThis %>%
+  ggplot(aes(x=Age, y=Sex, fill=Type)) + 
+    geom_boxplot()+
+    facet_wrap(~Type)
+```
+
+
+
+```{r warning=FALSE}
+
+UseThis %>% 
+ggplot(aes(x=Age, y=Year, fill = Type) ) +
+  geom_bin2d(bins = 70) +
+  theme_bw()
+
+
+```
+
+
+
+
+## Data Analysis
+
+## Which State in the USA has the most reported shark attacks?
+A simple value metric we can determine through filtering and grouping the data
+
+```{r}
+UseThis %>%
+     filter(Country == "USA") %>% 
+   group_by(Area) %>% 
+    summarise(Total = sum(n())) %>% 
+    arrange(desc(Total)) %>% 
+    head(1)
+
+```
+
+
+## What type of shark attack occurs the most among women & among men ?
+To determine these values the data was grouped by sex and the type of attack. A new value called "Total" was then created to count the total number of rows and then arranged to show the greates value first. Unprovoked proved to be the highest among both sexes.
+
+```{r}
+UseThis %>% 
+    group_by(Type, Sex) %>% 
+    summarise(total = sum(n(), na.rm = T)) %>% 
+    arrange(desc(total)) %>% 
+    head(2)
+    
+```
+
+
+## What age group makes up the most shark attacks? 
+To determine this metric all the N/A values were first filtered out and then grouped by age. Once more a total value was made to determine the sum of the number of rows and then the arranged by descending order. The first value was 17 years old.
+
+```{r}
+UseThis %>% 
+    filter(Age > 0) %>% 
+    group_by(Age) %>% 
+    summarise(Total = sum(n(), na.rm = T)) %>% 
+    arrange(desc(Total)) %>% 
+    head(1)
+
+
+```
+
+
+## Which Country has the most shark Attacks?
+This was determined by grouping the data via country and creating a total value to sum up the rows. The data was again arranged in descending order and the first value was the USA.
+
+```{r}
+UseThis %>% 
+   group_by(Country) %>% 
+    summarise(Total = sum(n())) %>% 
+    arrange(desc(Total)) %>% 
+    head(1)
+```
+
+
+
+
+
+
+
+
+
+
+## Conclusion
+After exploring this data set I was able to gleam some insights of the trends I noticed. Creating a density chart and making comparisons between multiple variables at once allowed for optimal utilization of the ggplot package. We learned that the USA has reported the most cases of shark attacks, 17 year olds make up the majority of these attacks, and Florida holds the title in the US for having the most reported cases. While covid is still in place, not much can be said about the findings from this dataset. However, I was able to deffer certain historic events that would explain the trends the graphs showed. I was able to relate more of the patterns I saw in the charts to real life occurrences and draw more conclusive results from that. I learned the importance of data sanitation and pre-processing since much needed to be changed in this dataset for it to be worked with in a reasonable fashion. I feel like the tools I used in this project give a decent view as to how much I learned in this class; going from simple markdown assignments to constructing graphs from data I need to process is a big leap.
+
+
+## What More Could be Done?
+This dataset still has limitless possibilities and this project only scratches the surface of it. A probability chart can be constructed that would determine the likelihood of you getting in a shark attack depending on your age, sex, and location. Statistical learning models could also be formed using more sophisticated methods to determine areas of "high danger" or increased likelihoods. The imagination is the only limitation to what could be done with this and other sets of data, time will only tell just how many problems we can solve or prevent through data manipulation.
+
+## Dataset Cited
+
+You can find the dataset I used from [This](https://www.kaggle.com/ncsaayali/shark-attack-dataset/metadata) site.
 

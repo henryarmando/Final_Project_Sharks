@@ -4,25 +4,18 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-
+library(readxl)
+GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls", 
+    col_types = c("text", "text", "numeric", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "numeric", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "numeric"))
 ```
 
-## R Markdown
+## My Dataset
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This Dataset can be found on kaggle at this link: https://www.kaggle.com/ncsaayali/shark-attack-dataset/metadata.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
