@@ -18,4 +18,9 @@ GSAF5_1 <- read_excel("F:/Downloads/DataSets/GSAF5-1.xls/GSAF5-1.xls",
 
 This Dataset can be found on kaggle at this link: https://www.kaggle.com/ncsaayali/shark-attack-dataset/metadata.
 
+## Ideas
+*Display relationship between age and year of the attack*
 
+*Graph which age and state makes up the greatest amount of shark attacks*
+
+*Find the density of age group per year*

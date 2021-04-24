@@ -10,11 +10,11 @@ output: html_document
 ## Introduction
 One of the most feared predators of the ocean, the shark. Today we're gonna find out how scared we should be of what has infamously been portrayed as a man-eating beast. Let's ask these questions:
 
-*Which State in the USA has the most reported shark attacks?*
+_**Which State in the USA has the most reported shark attacks?**_
 
-*What type of shark attack occurs the most among women & among men ?*
+_**What type of shark attack occurs the most among women & among men ?**_
 
-*What age group makes up the most shark attacks?* 
+_**What age group makes up the most shark attacks?**_ 
 
 
 My project looks at over 6,000 reported cases of shark attacks including that area the attack took place, country, age and name of victim, and so on. 
@@ -305,7 +305,7 @@ UseThis %>%
 
 
 ## Conclusion
-After exploring this data set I was able to gleam some insights of the trends I noticed. Creating a density chart and making comparisons between multiple variables at once allowed for optimal utilization of the ggplot package. We learned that the USA has reported the most cases of shark attacks, 17 year olds make up the majority of these attacks, and Florida holds the title in the US for having the most reported cases. While covid is still in place, not much can be said about the findings from this dataset. However, I was able to deffer certain historic events that would explain the trends the graphs showed. I was able to relate more of the patterns I saw in the charts to real life occurrences and draw more conclusive results from that. I learned the importance of data sanitation and pre-processing since much needed to be changed in this dataset for it to be worked with in a reasonable fashion. I feel like the tools I used in this project give a decent view as to how much I learned in this class; going from simple markdown assignments to constructing graphs from data I need to process is a big leap.
+After exploring this data set I was able to gleam some insights off the trends I noticed. Creating a density chart and making comparisons between multiple variables at once allowed for optimal utilization of the ggplot package. We learned that the USA has reported the most cases of shark attacks, 17 year olds make up the majority of these attacks, and Florida holds the title in the US for having the most reported cases. While covid is still in place, not much can be said about the findings from this dataset. However, I was able to deffer certain historic events that would explain the trends the graphs showed. I was able to relate more of the patterns I saw in the charts to real life occurrences and draw more conclusive results from that. I learned the importance of data sanitation and pre-processing since much needed to be changed in this dataset for it to be worked with in a reasonable fashion. I feel like the tools I used in this project give a decent view as to how much I learned in this class; going from simple markdown assignments to constructing graphs from data I need to process is a big leap.
 
 
 ## What More Could be Done?
